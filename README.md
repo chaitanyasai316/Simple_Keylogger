@@ -1,3 +1,8 @@
+# PRODIGY_CS_04
+
+## Task-04
+Create a basic keylogger program that records and logs keystrokes. Focus on logging the keys pressed and saving them to a file. Note: Ethical considerations and permissions are crucial for projects involving keyloggers.
+
 # Keylogger Program
 
 This is a basic keylogger implemented in C that captures keystrokes and logs them into a file called `keylog.txt`. It detects both regular characters and special keys such as SHIFT, CTRL, BACKSPACE, and others.
